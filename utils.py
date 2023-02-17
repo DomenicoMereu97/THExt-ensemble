@@ -29,7 +29,7 @@ from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import cosine_similarity
 from Thext import SentenceRankerPlus
-from Thext import Highlighter
+from Thext import Highlighter_score
 from Thext import RedundancyManager
 
 
@@ -356,7 +356,7 @@ class THExt:
         sr = SentenceRankerPlus(device='cuda')
         sr.load_model(base_model_name=base_model_name, model_name_or_path=model_name_or_path,device='cuda')
         rm = RedundancyManager()
-        self.h = Highlighter.Highlighter(sr, redundancy_manager = rm)
+        self.h = Highlighter_score.Highlighter(sr, redundancy_manager = rm)
 
 class Feature_extractor:
     def __init__(self, model_name_or_path='checkpoint3_morenolq-thext-cs-scibert_1', base_model_name = "morenolq/thext-cs-scibert" ):
