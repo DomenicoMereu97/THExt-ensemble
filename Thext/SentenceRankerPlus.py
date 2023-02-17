@@ -188,23 +188,6 @@ class SentenceRankerPlus():
     # Data Preparation
     # ----------------------------------------------------------------------------
 
-    def set_text(self, text_list,train):
-      if train == True:
-        self.train_text = text_list
-      else :
-        self.val_text = text_list
-    
-    def set_abstract(self, text_list, train):
-      if train == True:
-        self.train_abstract = text_list
-      else :
-        self.val_abstract = text_list
-   
-    def set_labels(self, list_label, train):
-      if train == True:
-        self.train_labels = list_label
-      else :
-        self.val_labels = list_label
 
     def prepare_training_data(self, label_keys):
         logging.info("Trainer - preparing training data")
@@ -243,16 +226,41 @@ class SentenceRankerPlus():
                     self.val_labels.append(internal_dict[label_keys][s_k])  #appending label Rouge-2 Precision - Length independent
             except Exception as e:
                 print (e)
+                
+                
+    def prepare_abstract(self, flag, abstract):
+      if flag == True:
+        self.train_abstract =  abstract
+      else :
+        self.val_abstract =  abstract
+        
+        
+    
 
     def loading_pretrained_tokenizer(self, do_lower_case=False):
         #logging.info("Trainer - loading pretrained tokenizer " + self.base_model_name)
         self.tokenizer = AutoTokenizer.from_pretrained('morenolq/thext-cs-scibert', do_lower_case=do_lower_case)
+        
+        
+    def prepare_rouge(self, flag, rouge):
+      if  flag == True:
+        self.train_labels = rouge
+      else :
+        self.val_labels = rouge
+
 
     def prepare_for_training(self, label_keys="rlp_labels"):
         #self.prepare_training_data(label_keys=label_keys)
         #èself.prepare_validation_data(label_keys=label_keys)
         self.loading_pretrained_tokenizer()
         self.prepare_dataloaders()
+        
+        
+    def prepare_text(self, flag, text):
+      if flag == True:
+            self.train_text = text
+      else :
+        self.val_text = text
 
     def prepare_dataloaders(self):
         logging.info("Trainer - creating data loaders")
