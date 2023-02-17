@@ -1,4 +1,63 @@
 # THExt-ensemble
+##Description:
+This README provides the instructions on how to install and use the THExt-ensemble project, a deep learning model for text classification. It also includes information on how to create and manage the dataset.
+##Installation:
+To install the required packages, run the following code:
+
+'''python
+pip install -r requirements.txt
+python -m spacy download <language model>
+'''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# THExt-ensemble
  ***Missing abstract***
 
 ### Examples and demo
