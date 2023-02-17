@@ -227,12 +227,16 @@ class SentenceRankerPlus():
             except Exception as e:
                 print (e)
                 
-                
-    def prepare_abstract(self, flag, abstract):
-      if flag == True:
-        self.train_abstract =  abstract
-      else :
-        self.val_abstract =  abstract
+    def set_data(self,flag,abstract,text,rouge):
+        if flag == True:
+            self.train_abstract = abstract
+            self.train_labels = rouge 
+            self.train_text = text 
+         else :
+            self.val_abstract =  abstract
+            self.val_labels = rouge
+            self.val_text = text
+            
         
         
     
@@ -242,11 +246,7 @@ class SentenceRankerPlus():
         self.tokenizer = AutoTokenizer.from_pretrained('morenolq/thext-cs-scibert', do_lower_case=do_lower_case)
         
         
-    def prepare_rouge(self, flag, rouge):
-      if  flag == True:
-        self.train_labels = rouge
-      else :
-        self.val_labels = rouge
+
 
 
     def prepare_for_training(self, label_keys="rlp_labels"):
@@ -256,11 +256,7 @@ class SentenceRankerPlus():
         self.prepare_dataloaders()
         
         
-    def prepare_text(self, flag, text):
-      if flag == True:
-            self.train_text = text
-      else :
-        self.val_text = text
+
 
     def prepare_dataloaders(self):
         logging.info("Trainer - creating data loaders")
