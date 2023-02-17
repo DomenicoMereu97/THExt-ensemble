@@ -28,29 +28,10 @@ import rouge
 from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import cosine_similarity
-
-
 from Thext import SentenceRankerPlus
 from Thext import Highlighter_modified
 from Thext import RedundancyManager
 
-
-def sentence_score(sentence_num, num_sentences):
-    score_1 = 1 / (sentence_num)
-    score_2 = 1 / (num_sentences - sentence_num + 1)
-    return max(score_1, score_2)
-
-def position_sc(document):
-    sentences = sent_tokenize(document)
-
-    # sentences = document.split(".") # split document into sentences
-    num_sentences = len(sentences)
-    scores = [sentence_score(i + 1, num_sentences) for i in range(num_sentences)]
-    # Get the indices of the sentences with the highest scores
-    #indices = [i for i, score in enumerate(scores) ]
-    # array_sentences=[sentences[i] for i in indices]
-    # Return the sentences corresponding to the highest scores
-    return scores
 
 
 class Text_rank:
@@ -80,11 +61,6 @@ class Text_rank:
         except Exception as e:
             print("The pagerank algorithm failed to converge. Returning the top sentences according to their position in the text.")
             pr_scores = {i: N-i for i in range(len(sentences))}
-
-        #keys = list(pr_scores.keys())
-        #res = {}
-        #for ind in keys:
-        #    res[sentences[ind]] = pr_scores[ind]
 
         return list(pr_scores.values())
 
@@ -179,8 +155,8 @@ class Tf_idf:
     def _score_sentences(self, tf_idf_matrix) -> dict:
         """
         score a sentence by its word's TF
-        Basic algorithm: adding the TF frequency of every non-stop word in a sentence divided by total no of words in a sentence.
-        :rtype: dict
+        Basic algorithm: adding the TF-idf frequency of every non-stop word in a sentence divided by total no of words in a sentence.
+
         """
 
         sentenceValue = {}
@@ -212,13 +188,9 @@ class Tf_idf:
     def tfidf_score(self, text):
         """
         :param text: Plain summary_text of long article
-        :return: summarized summary_text
+        :return: tf-idf score
         """
 
-        '''
-        We already have a sentence tokenizer, so we just need 
-        to run the sent_tokenize() method to create the array of sentences.
-        '''
         # 1 Sentence Tokenize
         sentences = sent_tokenize(text)
         total_documents = len(sentences)
@@ -342,16 +314,13 @@ class RelevanceSummarizer(BaseSummarizer):
         Y. Gong and X. Liu (2001). Generic text summarization using relevance measure and latent semantic analysis.
         Proceedings of the 24th International Conference on Research in Information Retrieval (SIGIR ’01),
         pp. 19–25.
-        This method computes and ranks the cosine similarity between each sentence vector and the overall document
+        This method computes the cosine similarity between each sentence vector and the overall document
         """
 
         sentences = nltk.sent_tokenize(text)
         length = len(sentences)
-        #print(length)
         normalize_corpus = np.vectorize(self._normalize_document)
         norm_sentences = normalize_corpus(sentences)
-
-        #length = self._parse_summary_length(length, len(sentences))
 
         matrix = self._compute_matrix(norm_sentences, weighting='frequency')
 
@@ -382,9 +351,6 @@ class RelevanceSummarizer(BaseSummarizer):
             matrix.data[matrix.indptr[top_sentence]:matrix.indptr[top_sentence+1]] = 0
             matrix.eliminate_zeros()
 
-        # Return the sentences in the order in which they appear in the document
-        #summary_sentences.sort()
-        #print(summary_sentences)
         return list(dict(sorted(summary_sentences.items())).values())
     
 class THExt:
@@ -408,14 +374,13 @@ class Feature_extractor:
         tf_idf_score = self.tfidf.tfidf_score(text)
         relevance_score = self.rs.relevance_scores(text)
         scores_thext = self.thext.h.get_highlights_simple(text, abstract = True, rel_w=1.0, pos_w=0.0, red_w=0.0, prefilter=False, NH = None)
-        position = position_sc(text)
-        lists = [sentences,tr_score, lsa_scores, tf_idf_score, relevance_score, scores_thext , position]
+        lists = [sentences,tr_score, lsa_scores, tf_idf_score, relevance_score, scores_thext ]
         it = iter(lists)
         the_len = len(next(it))
         if not all(len(l) == the_len for l in it):
             raise ValueError('not all lists have same length!')
 
-        return { sen : {'text_renk' : tr, 'lsa_score' : lsa, 'tf_idf' : tf, 'relevance_score' : rel, 'thext_score' : s_thext, 'position_score': p, 'pos_i': i} for i , (sen, tr, lsa, tf, rel, s_thext, p) in enumerate(zip(sentences, tr_score, lsa_scores, tf_idf_score, relevance_score, scores_thext, position))}
+        return { sen : {'text_renk' : tr, 'lsa_score' : lsa, 'tf_idf' : tf, 'relevance_score' : rel, 'thext_score' : s_thext, 'pos_i': i} for i , (sen, tr, lsa, tf, rel, s_thext) in enumerate(zip(sentences, tr_score, lsa_scores, tf_idf_score, relevance_score, scores_thext))}
 
 class RedundancyIndipendentSet:
 
@@ -452,23 +417,11 @@ class RedundancyIndipendentSet:
         G.remove_edges_from(le_ids)
         n = np.argmax(scores)
         nodes = nx.maximal_independent_set(G, n)
+        
         return list(np.array(sentences)[nodes])
 
-        try:
-            pr_scores = pagerank(G, max_iter=1000)
 
-        except Exception as e:
-            print("The pagerank algorithm failed to converge. Returning the top sentences according to their position in the text.")
-            pr_scores = {i: N-i for i in range(len(sentences))}
-
-        #keys = list(pr_scores.keys())
-        #res = {}
-        #for ind in keys:
-        #    res[sentences[ind]] = pr_scores[ind]
-
-        return list(pr_scores.values())
-
-class Model_tree:
+class Ensemble:
     def __init__(self, model_name='RandomForest', model = None):
         self.fextractor = Feature_extractor()
 
@@ -496,7 +449,6 @@ class Model_tree:
     def predict(self, text):#predizione r
         f = self.fextractor.features(text)
         X = [list(v.values()) for v in f.values()]
-        #X = np.array(list(itertools.chain(*X)))
         pred = self.model.predict(X)
         return pred
 
@@ -505,7 +457,6 @@ class Model_tree:
 
     def load(self, name):
         self.model = joblib.load(f"./{name}.joblib")
-
 
 
     def summary(self, text, NH = 3, f=None, score = False):
