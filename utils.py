@@ -29,7 +29,7 @@ from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import cosine_similarity
 from Thext import SentenceRankerPlus
-from Thext import Highlighter_modified
+from Thext import Highlighter
 from Thext import RedundancyManager
 
 
@@ -338,9 +338,7 @@ class RelevanceSummarizer(BaseSummarizer):
 
             # Grab the top sentence and add it to the summary
             top_sentence = sentence_scores.argsort()[-1]
-            #print(top_sentence)
             summary_sentences[top_sentence] = sentence_scores[top_sentence]
-            #summary_sentences.append(top_sentence)
 
             # Remove all terms that appear in the top sentence from the document
             terms_in_top_sentence = (matrix[top_sentence, :] != 0).toarray()
@@ -358,7 +356,7 @@ class THExt:
         sr = SentenceRankerPlus(device='cuda')
         sr.load_model(base_model_name=base_model_name, model_name_or_path=model_name_or_path,device='cuda')
         rm = RedundancyManager()
-        self.h = Highlighter_modified.Highlighter(sr, redundancy_manager = rm)
+        self.h = Highlighter.Highlighter(sr, redundancy_manager = rm)
 
 class Feature_extractor:
     def __init__(self, model_name_or_path='checkpoint3_morenolq-thext-cs-scibert_1', base_model_name = "morenolq/thext-cs-scibert" ):
