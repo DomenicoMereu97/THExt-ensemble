@@ -359,7 +359,7 @@ class THExt:
         self.h = Highlighter_score.Highlighter(sr, redundancy_manager = rm)
 
 class Feature_extractor:
-    def __init__(self, model_name_or_path='checkpoint3_morenolq-thext-cs-scibert_1', base_model_name = "morenolq/thext-cs-scibert" ):
+    def __init__(self, model_name_or_path='checkpoint', base_model_name = "morenolq/thext-cs-scibert" ):
         self.tr = Text_rank()
         self.lsa = LSA()
         self.tfidf = Tf_idf()
