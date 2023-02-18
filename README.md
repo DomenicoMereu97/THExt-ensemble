@@ -13,7 +13,7 @@ In figure is represented the pipeline used in this project:<br/>
 
 
 ## Description:
-This README provides the instructions on how to install and use the THExt-ensemble project, a deep learning model for text classification.
+This README provides the instructions on how to install and use the THExt-ensemble project, a deep learning model for text summarization.
 
 
 # Installation:
