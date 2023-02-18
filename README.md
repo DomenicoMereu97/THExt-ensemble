@@ -1,7 +1,8 @@
 # Title: THExt-ensemble README
 In this study, we propose a new model structure for scientific paper summarization, which employs contextualized embeddings and transformer models to extract relevant paper highlights. We fine-tuned the THExt model using the CNN Daily Email dataset, and to evaluate the generalization capability of the proposed method, we suggest an ensemble model that combines non-transformer-based approaches with the THExt model. The non-transformer methods that we used are Latent Semantic Analysis (LSA), Relevance score, TF-IDF, and Text Rank. We then tested some regression models, including Random Forest Regressor, Stochastic Gradient Descent Regressor, and Lasso, to predict the scores for each sentence. We found that the ensemble model outperformed each individual model in terms of ROUGE scores. Our proposed method has the potential to aid researchers in summarizing and effectively communicating their research findings.
 In figure is represented the pipeline used in this project
-![THExt](https://user-images.githubusercontent.com/75221419/219875051-49894481-c976-4ca8-b43b-b02bfae15798.jpg)
+![THExt](https://user-images.githubusercontent.com/75221419/219876872-e49dfedc-b485-41d1-a59b-7c5a8af4db84.jpg)
+
 
 ## Description:
 This README provides the instructions on how to install and use the THExt-ensemble project, a deep learning model for text classification. It also includes information on how to create and manage the dataset.
