@@ -9,7 +9,7 @@ def finetuning(dataset, checkpoint = "checkpoint"):
     path = "morenolq/thext-cs-scibert"
     rouge_label = 'rouge2fscore'
 
-    feature_train, feature_test, lable_train, lable_test = train_test_split(dataset[['sentence','abstract']], dataset[rouge_label], test_size=0.2, random_state=42)
+    feature_train, feature_test, lable_train, lable_test = train_test_split(dataset[['sentence','abstract']], dataset['rouge_label'], test_size=0.2, random_state=42)
 
     sr = SentenceRankerPlus(base_model_name=model, model_name_or_path=path, device='cuda')
     sr.load_model(base_model_name=model, model_name_or_path=path,device='cuda')
