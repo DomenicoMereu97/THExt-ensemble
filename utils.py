@@ -29,7 +29,7 @@ from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import cosine_similarity
 from Thext import SentenceRankerPlus
-from Thext import Highlighter_score
+from Thext import Highlighter
 from Thext import RedundancyManager
 
 
