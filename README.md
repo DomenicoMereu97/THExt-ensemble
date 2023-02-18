@@ -38,7 +38,6 @@ You can train the model by running the following code.
 from finetuning import finetuning
 finetuning("dataset_fine_tuning_THExt.csv", "checkpoint") 
 ```
-The csv file is not on the github due to its large size, but you can download it from drive
   
 Testing code is present in the notebook.
   
