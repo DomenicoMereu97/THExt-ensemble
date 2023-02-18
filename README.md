@@ -17,7 +17,6 @@ This README provides the instructions on how to install and use the THExt-ensemb
 
 
 # Installation:
-Set your current directory to the project file, and then you can train the model by running:
 To install the required packages, run the following code:
 
 ```python
