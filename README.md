@@ -1,11 +1,14 @@
-#Title: THExt-ensemble README
-## Description
-In this study, we propose a new model structure for scientific paper summarization, called THExt, which employs contextualized embeddings and transformer models to extract relevant paper highlights. We fine-tuned the THExt model using the CNN Daily Email dataset, and to evaluate the generalization capability of the proposed method, we suggest an ensemble model that combines non-transformer-based approaches with the THExt model. The non-transformer methods that we used are Latent Semantic Analysis (LSA), Relevance score, TF-IDF, and Text Rank. We then tested some regression models, including Random Forest Regressor, Stochastic Gradient Descent Regressor, and Lasso, to predict the scores for each sentence. We found that the ensemble model outperformed each individual model in terms of ROUGE scores. Our proposed method has the potential to aid researchers in summarizing and effectively communicating their research findings.
+# Title: THExt-ensemble README
+In this study, we propose a new model structure for scientific paper summarization, which employs contextualized embeddings and transformer models to extract relevant paper highlights. We fine-tuned the THExt model using the CNN Daily Email dataset, and to evaluate the generalization capability of the proposed method, we suggest an ensemble model that combines non-transformer-based approaches with the THExt model. The non-transformer methods that we used are Latent Semantic Analysis (LSA), Relevance score, TF-IDF, and Text Rank. We then tested some regression models, including Random Forest Regressor, Stochastic Gradient Descent Regressor, and Lasso, to predict the scores for each sentence. We found that the ensemble model outperformed each individual model in terms of ROUGE scores. Our proposed method has the potential to aid researchers in summarizing and effectively communicating their research findings.
+In figure is represented the pipeline used in this project
+![THExt](https://user-images.githubusercontent.com/75221419/219875051-49894481-c976-4ca8-b43b-b02bfae15798.jpg)
 
-##Description:
+## Description:
 This README provides the instructions on how to install and use the THExt-ensemble project, a deep learning model for text classification. It also includes information on how to create and manage the dataset.
 
-#Installation:
+
+# Installation:
+Set your current directory to the project file, and then you can train the model by running:
 To install the required packages, run the following code:
 
 ```python
@@ -15,39 +18,42 @@ python -m spacy download <language model>
 ```
 Note: Replace <language model> with the name of the Spacy language model you want to download.
 
-##Usage:
+## Usage:
 After installing the required packages, you can use the pre-trained models and datasets provided in the Google Drive link below for testing purposes:
 
 <Insert Google Drive Link>
-Set your current directory to the project file, and then you can train the model by running:
+Than mount the drive by running the following code and set your current directory to the project file.
 
 ```python
-Copy code
-from Thext.utils.train import train
+from google.colab import drive
+drive.mount('/content/drive')
 ```
+You can train the model by running:
 
+```python
+from Thext.utils.train import train
 train('Datasets/dataset_task2.csv', "checkpoint", True)
+  ```
 You can test the performances of the models by running:
-
-python
-Copy code
+  
+```python
 from Thext.utils.test import test_models
 
 test_models("task1", method="trigram_block")
-Dataset Creation:
+  ```
+
+  
+Dataset Creation: (TOLGO?)
 If you want to create the dataset, you can run the following code:
 
-python
-Copy code
+```python
 from Thext import DatasetPlus
 
 dataset_manager = DatasetPlus()
 
 dataset_manager.dataset_task1("dataset.csv")
-Examples and Demo:
-The following examples have been extracted using the best model in terms of performance reported in our paper.
+  ```
 
-Note: Missing abstract.
 
 
 
