@@ -39,7 +39,7 @@ from finetuning import finetuning
 finetuning("dataset_fine_tuning_THExt.csv", "checkpoint") 
 ```
   
-## Using pretrained models:
+## Using pretrained ensemble model:
 ```python
   
 text = "This paper aims to investigate the extraction of highlights from text utilizing an extractive sentence-based summarization approach. The proposed methodology involves the application of the Transformer-based Highlights Extractor (THExt) model that utilizes contextualized embeddings and transformer models to extract significant paper highlights. The THExt model is fine-tuned using the CNN Daily Email dataset to assess the generalization capability of the proposed method. Additionally, our study proposes an ensemble model that combines non-transformer-based techniques with the THExt model to enhance its effectiveness."
