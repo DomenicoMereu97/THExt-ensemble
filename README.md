@@ -22,19 +22,16 @@ Note: Replace <language model> with the name of the Spacy language model you wan
 ## Usage:
 After installing the required packages, you can use the pre-trained models and datasets provided in the Google Drive link below for testing purposes:
 
-<Insert Google Drive Link>
-Than mount the drive by running the following code and set your current directory to the project file.
+https://drive.google.com/drive/folders/1W4R7F2-tmUMj07qUfWFpJvgXMPkM1jg8?usp=share_link
+  
+Than mount the drive by running and set your current directory to the project file.
 
-```python
-from google.colab import drive
-drive.mount('/content/drive')
-```
-You can train the model by running:
-
+You can train the model by running the following code.
 ```python
 from finetuning import finetuning
 finetuning("dataset_fine_tuning_THExt.csv", "checkpoint") 
 ```
+The csv file is not on the github due to its large size, but you can download it from drive
 You can test the performances of the models by running:
   
 testing code is present in the notebook.
