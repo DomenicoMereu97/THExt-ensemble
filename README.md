@@ -34,7 +34,7 @@ finetuning("dataset_fine_tuning_THExt.csv", "checkpoint")
 The csv file is not on the github due to its large size, but you can download it from drive
 You can test the performances of the models by running:
   
-testing code is present in the notebook.
+Testing code is present in the notebook.
   
 
 
