@@ -232,7 +232,7 @@ class SentenceRankerPlus():
             self.train_abstract = abstract
             self.train_labels = rouge 
             self.train_text = text 
-         else :
+        else :
             self.val_abstract =  abstract
             self.val_labels = rouge
             self.val_text = text
